@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/build/main.css">
+  <script src="/build/main.js"></script>
+</head>
+<body>
+
+  <div class="terminal-container">
+    <div class="terminal-screen">
+        <img src="/build/images/bezel.png" id="bezel" class="noselect">
+    </div>
+    <div class="terminal-banner">
+        cognist.sh
+    </div>
+    <div class="terminal-help-message">
+        Commands <br>
+        ---------------------------------------------------------------------------------------------- <br>
+        twitter - opens the cognist twitter in a new tab <br>
+        lore - opens the cognist lore in a new tab <br>
+        video - opens the cognist animated video in a new tab<br>
+
+
+        
+    </div>
+    <div id="terminal">
+        <textarea type="text" id="setter"></textarea>
+        <div id="getter">
+            <i class="fa fa-terminal" aria-hidden="true"></i>:<span id="writer"></span><b class="cursor" id="cursor">B</b>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  var cursor = $("#cursor");
+  var setter = $("#setter");
+  var writer = $("#writer");
+  var terminal = $("#terminal");
+  $(cursor).css("left", "0px");
+  function nl2br(txt){
+      return txt.replace(/\n/g, '<br /><i class="fa fa-terminal" aria-hidden="true"></i>:');
+  }
+  function writeit(from, e){
+      e = e || window.event;
+      var w = $(writer);
+      var tw = from.value;
+      w.html(nl2br(tw));
+  }
+  function moveIt(count, e){
+      e = e || window.event;
+      var keycode = e.keyCode || e.which;
+      if(keycode == 37 && parseInt($(cursor).css("left")) >= (0-((count-1)*10))){
+          $(cursor).css("left", parseInt($(cursor).css("left")) - 10 + "px");
+      } else if(keycode == 39 && (parseInt($(cursor).css("left")) + 10) <= 0){
+          $(cursor).css("left", parseInt($(cursor).css("left")) + 10 + "px");
+      }
+  }
+  function blink(){ 
+      if($(cursor).css("display") == "none"){ 
+          $(cursor).css("display","inline");
+      } else {
+          $(cursor).css("display","none");
+      }
+  }
+  setInterval("blink()", 500);
+  $(terminal).click(function(){
+      $(setter).focus();
+  });
+  $(setter).keydown(function(event){
+      writeit(this, event);
+      moveIt(this.value.length, event);
+  });
+  $(setter).keyup(function(event){
+      writeit(this, event);
+  });
+  $(setter).keypress(function(event){
+      writeit(this, event);
+  });
+
+  var inputTextValue;
+  window.onkeyup = keyup;
+
+  function keyup(e) {
+      inputTextValue = e.target.value;
+      if (e.keyCode == 13) {
+          let twitterEntered = inputTextValue.includes("twitter");
+          let videoEntered = inputTextValue.includes("video")
+
+      if (twitterEntered == true) {
+          window.open('https://twitter.com/Cognist_NFT');
+      return;
+      }
+      if (videoEntered == true) {
+          window.open('https://twitter.com/Cognist_NFT/status/1555591964212580354');
+      return;
+      }
+
+  }
+}
+</script>
+
+  <main>
+    <div id="minting-dapp"></div>
+  </main>
+
+  <div id="notifications"></div>
+</body>
+</html>
